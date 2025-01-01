@@ -76,7 +76,7 @@ func main() {
 	flag.UintVar(&raceData.RaceMin, "rl", 0, "Race length in minutes")
 	flag.Float64Var(&raceData.FuelPerLap, "fc", 0, "Fuel consumption per lap")
 	flag.Float64Var(&raceData.FuelCap, "tc", 110, "Fuel tank capacity")
-	flag.Float64Var(&raceData.ExtraFuel, "ef", 2, "Extra fuel needed")
+	flag.Float64Var(&raceData.ExtraFuel, "ef", 2, "Extra fuel needed in laps")
 
 	showHelp := flag.Bool("h", false, "Show help message")
 	flag.Parse()
@@ -94,7 +94,8 @@ func main() {
 	raceData.calculateLaps()
 	raceData.calculateFuel()
 	raceData.calculateStints()
-	raceData.addExtraFuel()
-
+	if raceData.ExtraFuel != 0 {
+		raceData.addExtraFuel()
+	}
 	fmt.Printf("Total fuel: %.2f\nTotal laps: %d\nStints: %d\n", raceData.TotalFuel, raceData.TotalLaps, raceData.Stints)
 }
