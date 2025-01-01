@@ -33,6 +33,29 @@ func (r *RaceData) addExtraFuel() {
 	r.TotalFuel += r.FuelPerLap * r.ExtraFuel
 }
 
+func help() {
+	helpMessage := fmt.Sprintf(`Usage: racer-calculator [OPTIONS]
+
+Description:
+  Calculates total fuel, total laps, and stints required based on race settings.
+  Ideal for endurance racing, focusing on fuel consumption and tank capacity.
+
+Options:
+  -lt    Lap time in seconds
+  -rl    Race length in minutes
+  -fc    Fuel consumption per lap
+  -tc    Fuel tank capacity
+  -ef    Extra fuel needed
+
+Examples:
+  racer-calculator -lt 90 -rl 120 -fc 3.5 -tc 110
+
+Output:
+  The output displays the total fuel, total laps, and stints required based on the provided race settings.`,
+	)
+	fmt.Println(helpMessage)
+}
+
 func (r *RaceData) promptUserInput() {
 	fmt.Print("Enter lap time (in seconds): ")
 	fmt.Scan(&r.LapSec)
@@ -55,7 +78,13 @@ func main() {
 	flag.Float64Var(&raceData.FuelCap, "tc", 110, "Fuel tank capacity")
 	flag.Float64Var(&raceData.ExtraFuel, "ef", 2, "Extra fuel needed")
 
+	showHelp := flag.Bool("h", false, "Show help message")
 	flag.Parse()
+
+	if *showHelp {
+		help()
+		return
+	}
 
 	if raceData.LapSec == 0 || raceData.RaceMin == 0 || raceData.FuelPerLap == 0 {
 		fmt.Println("Some required flags are missing. Entering interactive mode...")
