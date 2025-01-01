@@ -39,12 +39,12 @@ func main() {
 	flag.UintVar(&raceData.LapSec, "lt", 0, "Lap time in seconds")
 	flag.UintVar(&raceData.RaceMin, "rl", 0, "Race length in minutes")
 	flag.Float64Var(&raceData.FuelPerLap, "fc", 0, "Fuel consumption per lap")
-	flag.Float64Var(&raceData.FuelCap, "tc", 0, "Fuel tank capacity")
-	flag.Float64Var(&raceData.ExtraFuel, "ef", 0, "Extra fuel needed, default: 2")
+	flag.Float64Var(&raceData.FuelCap, "tc", 110, "Fuel tank capacity")
+	flag.Float64Var(&raceData.ExtraFuel, "ef", 2, "Extra fuel needed, default: 2")
 
 	flag.Parse()
 
-	if raceData.LapSec == 0 || raceData.RaceMin == 0 || raceData.FuelPerLap == 0 || raceData.FuelCap == 0 {
+	if raceData.LapSec == 0 || raceData.RaceMin == 0 || raceData.FuelPerLap == 0 {
 		fmt.Println("Some required flags are missing. Entering interactive mode...")
 		fmt.Print("Enter lap time (in seconds): ")
 		fmt.Scan(&raceData.LapSec)
