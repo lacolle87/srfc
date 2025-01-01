@@ -7,54 +7,54 @@ import (
 )
 
 type RaceData struct {
-	LapTimeInSec          uint
-	RaceLengthInMin       uint
-	Stints                uint
-	TotalLaps             uint
-	FuelConsumptionPerLap float64
-	FuelTankCapacity      float64
-	TotalFuel             float64
-	ExtraFuel             float64
+	LapSec     uint
+	RaceMin    uint
+	Stints     uint
+	TotalLaps  uint
+	FuelPerLap float64
+	FuelCap    float64
+	TotalFuel  float64
+	ExtraFuel  float64
 }
 
 func (r *RaceData) calcLaps() {
-	r.TotalLaps = r.RaceLengthInMin * 60 / r.LapTimeInSec
+	r.TotalLaps = r.RaceMin * 60 / r.LapSec
 }
 
 func (r *RaceData) addExtraFuel() {
-	r.TotalFuel += r.FuelConsumptionPerLap * r.ExtraFuel
+	r.TotalFuel += r.FuelPerLap * r.ExtraFuel
 }
 
 func (r *RaceData) calcFuel() {
-	r.TotalFuel = float64(r.TotalLaps) * r.FuelConsumptionPerLap
+	r.TotalFuel = float64(r.TotalLaps) * r.FuelPerLap
 }
 
 func (r *RaceData) calcStints() {
-	r.Stints = uint(math.Ceil(r.TotalFuel / r.FuelTankCapacity))
+	r.Stints = uint(math.Ceil(r.TotalFuel / r.FuelCap))
 }
 
 func main() {
 	raceData := &RaceData{}
 
-	flag.UintVar(&raceData.LapTimeInSec, "lap-time", 0, "Time for one lap in seconds")
-	flag.UintVar(&raceData.RaceLengthInMin, "race-length", 0, "Race length in minutes")
-	flag.Float64Var(&raceData.FuelConsumptionPerLap, "fuel-consumption", 0, "Fuel consumption per lap")
-	flag.Float64Var(&raceData.FuelTankCapacity, "fuel-tank", 0, "Fuel tank capacity")
-	flag.Float64Var(&raceData.ExtraFuel, "extra-fuel", 0, "Extra fuel allowance")
+	flag.UintVar(&raceData.LapSec, "lt", 0, "Lap time in seconds")
+	flag.UintVar(&raceData.RaceMin, "rl", 0, "Race length in minutes")
+	flag.Float64Var(&raceData.FuelPerLap, "fc", 0, "Fuel consumption per lap")
+	flag.Float64Var(&raceData.FuelCap, "tc", 0, "Fuel tank capacity")
+	flag.Float64Var(&raceData.ExtraFuel, "ef", 0, "Extra fuel needed, default: 2")
 
 	flag.Parse()
 
-	if raceData.LapTimeInSec == 0 || raceData.RaceLengthInMin == 0 || raceData.FuelConsumptionPerLap == 0 || raceData.FuelTankCapacity == 0 {
+	if raceData.LapSec == 0 || raceData.RaceMin == 0 || raceData.FuelPerLap == 0 || raceData.FuelCap == 0 {
 		fmt.Println("Some required flags are missing. Entering interactive mode...")
 		fmt.Print("Enter lap time (in seconds): ")
-		fmt.Scan(&raceData.LapTimeInSec)
+		fmt.Scan(&raceData.LapSec)
 		fmt.Print("Enter race length (in minutes): ")
-		fmt.Scan(&raceData.RaceLengthInMin)
+		fmt.Scan(&raceData.RaceMin)
 		fmt.Print("Enter fuel consumption per lap: ")
-		fmt.Scan(&raceData.FuelConsumptionPerLap)
+		fmt.Scan(&raceData.FuelPerLap)
 		fmt.Print("Enter fuel tank capacity: ")
-		fmt.Scan(&raceData.FuelTankCapacity)
-		fmt.Print("Enter extra fuel allowance: ")
+		fmt.Scan(&raceData.FuelCap)
+		fmt.Print("Enter extra fuel needed in laps: ")
 		fmt.Scan(&raceData.ExtraFuel)
 	}
 
