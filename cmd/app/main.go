@@ -1,15 +1,16 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"math"
 )
 
 type RaceData struct {
-	LapTimeInSec          uint16
-	RaceLengthInMin       uint16
-	Stints                uint16
-	TotalLaps             uint16
+	LapTimeInSec          uint
+	RaceLengthInMin       uint
+	Stints                uint
+	TotalLaps             uint
 	FuelConsumptionPerLap float64
 	FuelTankCapacity      float64
 	TotalFuel             float64
@@ -29,24 +30,38 @@ func (r *RaceData) calcFuel() {
 }
 
 func (r *RaceData) calcStints() {
-	r.Stints = uint16(math.Ceil(r.TotalFuel / r.FuelTankCapacity))
+	r.Stints = uint(math.Ceil(r.TotalFuel / r.FuelTankCapacity))
 }
 
 func main() {
-	raceData := RaceData{
-		LapTimeInSec:          60,
-		RaceLengthInMin:       30,
-		Stints:                0,
-		TotalLaps:             0,
-		FuelConsumptionPerLap: 2,
-		FuelTankCapacity:      100,
-		TotalFuel:             0,
-		ExtraFuel:             2,
+	raceData := &RaceData{}
+
+	flag.UintVar(&raceData.LapTimeInSec, "lap-time", 0, "Time for one lap in seconds")
+	flag.UintVar(&raceData.RaceLengthInMin, "race-length", 0, "Race length in minutes")
+	flag.Float64Var(&raceData.FuelConsumptionPerLap, "fuel-consumption", 0, "Fuel consumption per lap")
+	flag.Float64Var(&raceData.FuelTankCapacity, "fuel-tank", 0, "Fuel tank capacity")
+	flag.Float64Var(&raceData.ExtraFuel, "extra-fuel", 0, "Extra fuel allowance")
+
+	flag.Parse()
+
+	if raceData.LapTimeInSec == 0 || raceData.RaceLengthInMin == 0 || raceData.FuelConsumptionPerLap == 0 || raceData.FuelTankCapacity == 0 {
+		fmt.Println("Some required flags are missing. Entering interactive mode...")
+		fmt.Print("Enter lap time (in seconds): ")
+		fmt.Scan(&raceData.LapTimeInSec)
+		fmt.Print("Enter race length (in minutes): ")
+		fmt.Scan(&raceData.RaceLengthInMin)
+		fmt.Print("Enter fuel consumption per lap: ")
+		fmt.Scan(&raceData.FuelConsumptionPerLap)
+		fmt.Print("Enter fuel tank capacity: ")
+		fmt.Scan(&raceData.FuelTankCapacity)
+		fmt.Print("Enter extra fuel allowance: ")
+		fmt.Scan(&raceData.ExtraFuel)
 	}
 
 	raceData.calcLaps()
 	raceData.calcFuel()
 	raceData.calcStints()
 	raceData.addExtraFuel()
-	fmt.Printf("Total fuel: %.2f\nTotal laps: %d\nStints: %d", raceData.TotalFuel, raceData.TotalLaps, raceData.Stints)
+
+	fmt.Printf("Total fuel: %.2f\nTotal laps: %d\nStints: %d\n", raceData.TotalFuel, raceData.TotalLaps, raceData.Stints)
 }
