@@ -45,13 +45,13 @@ If not installed, follow the instructions at [golang.org](https://golang.org).
 Run the tool with options:
 
 ```bash
-racer-calculator -lt <lap_time_in_seconds> -rl <race_length_in_minutes> -fc <fuel_consumption_per_lap> -tc <tank_capacity> -ef <extra_fuel_in_laps>
+srfc -lt <lap_time_in_seconds> -rl <race_length_in_minutes> -fc <fuel_consumption_per_lap> -tc <tank_capacity> -ef <extra_fuel_in_laps>
 ```
 
 ### Example
 
 ```bash
-racer-calculator -lt 90 -rl 120 -fc 3.5
+srfc -lt 90 -rl 120 -fc 3.5
 ```
 
 Output:
