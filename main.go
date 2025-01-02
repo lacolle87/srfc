@@ -98,7 +98,8 @@ Options:
   -ef    Extra fuel needed in laps
 
 Examples:
-  racer-calculator -lt 90 -rl 120 -fc 3.5 -tc 110`)
+  racer-calculator -lt 90 -rl 120 -fc 3.5 -tc 110`,
+	)
 }
 
 func main() {
