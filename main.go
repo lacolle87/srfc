@@ -45,7 +45,7 @@ Options:
   -rl    Race length in minutes
   -fc    Fuel consumption per lap
   -tc    Fuel tank capacity
-  -ef    Extra fuel needed
+  -ef    Extra fuel needed in laps
 
 Examples:
   racer-calculator -lt 90 -rl 120 -fc 3.5 -tc 110
@@ -97,5 +97,5 @@ func main() {
 	if raceData.ExtraFuel != 0 {
 		raceData.addExtraFuel()
 	}
-	fmt.Printf("Total fuel: %.2f\nTotal laps: %d\nStints: %d\n", raceData.TotalFuel, raceData.TotalLaps, raceData.Stints)
+	fmt.Printf("Total fuel: %.2f\nTotal laps: %d\nStints: %d\nAdded extra fuel for %.1f laps\n", raceData.TotalFuel, raceData.TotalLaps, raceData.Stints, raceData.ExtraFuel)
 }
