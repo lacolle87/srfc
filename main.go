@@ -121,6 +121,7 @@ func main() {
 	if raceData.LapSec == 0 || raceData.RaceMin == 0 || raceData.FuelPerLap == 0 {
 		fmt.Println("Some required flags are missing or invalid. Entering interactive mode...")
 		raceData.promptUserInput()
+		fmt.Println("")
 	}
 
 	raceData.calculateLaps()
@@ -130,6 +131,6 @@ func main() {
 		raceData.addExtraFuel()
 	}
 
-	fmt.Printf("\nTotal fuel: %.2f\nTotal laps: %d\nStints: %d\nAdded extra fuel for %.1f laps\n",
+	fmt.Printf("Total fuel: %.2f\nTotal laps: %d\nStints: %d\nAdded extra fuel for %.1f laps\n",
 		raceData.TotalFuel, raceData.TotalLaps, raceData.Stints, raceData.ExtraFuel)
 }
