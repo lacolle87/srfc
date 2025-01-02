@@ -1,4 +1,4 @@
-module simRacingFuelCalculator
+module srfc
 
 go 1.23.4
 
