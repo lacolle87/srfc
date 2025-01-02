@@ -1,4 +1,4 @@
-module srfc
+module github.com/lacolle87/srfc
 
 go 1.23.4
 
