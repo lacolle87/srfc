@@ -130,6 +130,6 @@ func main() {
 		raceData.addExtraFuel()
 	}
 
-	fmt.Printf("Total fuel: %.2f\nTotal laps: %d\nStints: %d\nAdded extra fuel for %.1f laps\n",
+	fmt.Printf("\nTotal fuel: %.2f\nTotal laps: %d\nStints: %d\nAdded extra fuel for %.1f laps\n",
 		raceData.TotalFuel, raceData.TotalLaps, raceData.Stints, raceData.ExtraFuel)
 }
