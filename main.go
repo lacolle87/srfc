@@ -20,7 +20,7 @@ type RaceData struct {
 }
 
 func (r *RaceData) calculateLaps() {
-	r.TotalLaps = r.RaceMin * 60 / r.LapSec
+	r.TotalLaps = uint(math.Ceil(float64(r.RaceMin) * 60 / float64(r.LapSec)))
 }
 
 func (r *RaceData) calculateFuel() {
